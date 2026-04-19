@@ -67,7 +67,7 @@ def get_kidney_result(data):
 
 @app.route("/")
 def home():
-    return "Backend running"
+    return render_template('index.html')
 
 
 
