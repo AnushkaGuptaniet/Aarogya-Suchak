@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Health Result - Aarogya Suchak</title>
+<link rel="stylesheet" href="style.css">
+
+</head>
+
+<body onload="showFinalResult()">
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+<h2 class="logo">
+Aarogya Suchak
+<img src="https://cdn-icons-png.flaticon.com/512/2966/2966488.png">
+</h2>
+
+<ul class="nav-links">
+<li><a href="index.html">Home</a></li>
+<li><a href="about.html">About</a></li>
+<li><a href="login.html">Login</a></li>
+</ul>
+
+</nav>
+
+
+
+<!-- RESULT SECTION -->
+
+<div class="result-container">
+
+<h2>Your Health Prediction</h2>
+
+
+<!-- MULTI DISEASE OUTPUT -->
+
+<div class="card pink">
+<h3>Diabetes Risk</h3>
+<p id="diabetesResult"></p>
+</div>
+
+<div class="card purple">
+<h3>Heart Disease Risk</h3>
+<p id="heartResult"></p>
+</div>
+
+
+<!-- PROGRESS BAR -->
+
+<div class="result-meter">
+<div id="resultBar"></div>
+</div>
+
+
+<!-- AI MESSAGE -->
+
+<p id="aiResult"></p>
+
+
+<!-- RECOMMENDATION -->
+
+<div class="recommendations">
+
+<h3>Health Recommendations</h3>
+
+<p id="recommendationText"></p>
+
+<ul>
+<li> Eat balanced diet</li>
+<li> Exercise daily</li>
+<li> Drink 2-3 litres water</li>
+<li> Maintain proper sleep</li>
+</ul>
+
+</div>
+
+
+<!-- BUTTONS -->
+
+<button onclick="window.location.href='dashboard.html'">
+Go to Dashboard →
+</button>
+
+<button onclick="downloadReport()">
+Download Health Report
+</button>
+
+</div>
+
+
+<script src="script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+
+        body{
+            background: linear-gradient(135deg,#fbc2eb,#a6c1ee);
+        }
+
+        .dashboard-wrapper{
+            max-width: 1000px;
+            margin: auto;
+            padding: 30px;
+        }
+
+        /* HEADER */
+        .dashboard-header{
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .dashboard-header h2{
+            font-size: 32px;
+            color: #C94F7C;
+        }
+
+        /* BUTTONS */
+        .dashboard-actions{
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .dash-btn{
+            padding: 12px 25px;
+            border-radius: 30px;
+            border: none;
+            background: linear-gradient(135deg,#ff6a88,#ff99ac);
+            color: white;
+            cursor: pointer;
+            font-weight: 600;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .dash-btn:hover{
+            transform: scale(1.05);
+        }
+
+        /* CARDS */
+        .dashboard-card{
+            background: rgba(255,255,255,0.3);
+            backdrop-filter: blur(12px);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        /* RESULT TEXT */
+        #last-result{
+            font-size: 18px;
+            font-weight: bold;
+            color: #444;
+        }
+
+        /* CHATBOX */
+        .chatbox {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            width: 320px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            display: none;
+            overflow: hidden;
+        }
+
+        .chat-header {
+            background: linear-gradient(135deg, #ff6a88, #ff99ac);
+            color: white;
+            padding: 12px;
+            font-weight: bold;
+        }
+
+        .chat-messages {
+            height: 220px;
+            overflow-y: auto;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        .chat-input-area {
+            display: flex;
+            border-top: 1px solid #eee;
+        }
+
+        .chat-input-area input {
+            flex: 1;
+            border: none;
+            padding: 10px;
+            outline: none;
+        }
+
+        .chat-input-area button {
+            background: #ff6a88;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="dashboard-wrapper">
+
+    <!-- HEADER -->
+    <div class="dashboard-header">
+        <h2> Welcome to Your Dashboard</h2>
+        <br>
+        <p>Your AI-powered health assistant</p>
+    </div>
+
+    <!-- BUTTONS -->
+    <div class="dashboard-actions">
+        <a href="assessment.html" class="dash-btn"> Check Health</a>
+        <button class="dash-btn" onclick="toggleChatbot()"> Ask AI</button>
+    </div>
+
+    <!-- RESULT -->
+    <div class="dashboard-card result-card-premium">
+        <h3>📊 Result</h3>
+        <p id="last-result"></p>
+        <div class="result-extra">
+            <p><b>Risk Level:</b> <span id="risk-text"></span></p>
+            <div class="risk-bar">
+                <div id="risk-fill" class="risk-fill"></div>
+            </div>
+        </div>
+    </div>
+    <!-- CHART -->
+    <div class="dashboard-card">
+        <h3>📈 Health Analysis</h3>
+        <canvas id="healthChart"></canvas>
+    </div>
+
+    <!-- TIPS -->
+    <div class="dashboard-card">
+        <h3>💡 Health Tips</h3>
+        <ul>
+            <li>Drink enough water</li>
+            <li>Exercise daily</li>
+            <li>Eat healthy food</li>
+            <li>Sleep 7-8 hours</li>
+        </ul>
+    </div>
+
+</div>
+
+<!-- CHATBOX -->
+<div id="chatbox" class="chatbox">
+
+    <div class="chat-header">
+        Aaru 
+        <span onclick="toggleChatbot()" style="float:right;cursor:pointer;">✖</span>
+    </div>
+
+    <div id="chat-messages" class="chat-messages"></div>
+
+    <div class="chat-input-area">
+        <input type="text" id="chat-input" placeholder="Ask something...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+</div>
+
+<script>
+
+    // 🎯 LAST RESULT
+    const disease = localStorage.getItem("disease");
+    const risk = localStorage.getItem("risk");
+
+    // if (disease && risk) {
+    //     document.getElementById("last-result").innerText =
+    //         disease + " - " + risk;
+    // }
+    if (disease && risk) {
+
+    document.getElementById("last-result").innerText =
+        disease + " - " + risk;
+
+    document.getElementById("risk-text").innerText = risk;
+
+    let fill = document.getElementById("risk-fill");
+
+    if (risk.toLowerCase().includes("low")) {
+        fill.style.width = "30%";
+        fill.style.background = "#28a745";
+    } 
+    else if (risk.toLowerCase().includes("medium")) {
+        fill.style.width = "65%";
+        fill.style.background = "#ff9800";
+    } 
+    else {
+        fill.style.width = "95%";
+        fill.style.background = "#dc3545";
+    }
+}
+    // 📊 CHART
+    let riskValue = 1;
+    if (risk === "Medium Risk") riskValue = 2;
+    if (risk === "High Risk") riskValue = 3;
+
+    const ctx = document.getElementById('healthChart');
+
+    if(ctx){
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Health Risk'],
+                datasets: [{
+                    label: 'Risk Level',
+                    data: [riskValue]
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                if (value === 1) return "Low";
+                                if (value === 2) return "Medium";
+                                if (value === 3) return "High";
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    }
+
+    // 🤖 CHAT TOGGLE
+    function toggleChatbot() {
+        let box = document.getElementById("chatbox");
+        box.style.display = box.style.display === "block" ? "none" : "block";
+    }
+
+    // 💬 SEND MESSAGE
+    async function sendMessage() {
+
+        let input = document.getElementById("chat-input");
+        let msg = input.value;
+
+        if (!msg) return;
+
+        let chat = document.getElementById("chat-messages");
+
+        chat.innerHTML += `<p><b>You:</b> ${msg}</p>`;
+
+        let res = await fetch("http://127.0.0.1:5000/chat", {
+            method: "POST",
+            headers: {"Content-Type": "application/json"},
+            body: JSON.stringify({
+                message: msg,
+                disease: disease,
+                risk: risk
+            })
+        });
+
+        let data = await res.json();
+
+        chat.innerHTML += `<p><b>Aaru:</b> ${data.reply}</p>`;
+
+        chat.scrollTop = chat.scrollHeight;
+
+        input.value = "";
+    }
+
+    // 🤖 DEFAULT MESSAGE
+    window.onload = () => {
+        document.getElementById("chat-messages").innerHTML += 
+            "<p><b>Aaru:</b> Hello! Ask me anything about your health </p>";
+    };
+
+</script>
+
+</body>
+</html>

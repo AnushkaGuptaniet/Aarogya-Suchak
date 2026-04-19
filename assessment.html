@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Health Assessment</title>
+
+<link rel="stylesheet" href="style.css">
+
+<!-- FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<div class="assessment-page">
+
+    <div class="assessment-center">
+
+        <div class="assessment-card">
+
+            <h2>Health Assessment</h2>
+            <p class="subtitle">Enter your details to check your health risk</p>
+
+            <!-- FORM -->
+            <div class="form-grid">
+
+                <div class="form-group">
+                    <label>Age</label>
+                    <input type="number" id="age" placeholder="Enter age">
+                </div>
+
+                <div class="form-group">
+                    <label>BMI</label>
+                    <input type="number" id="bmi" placeholder="Enter BMI">
+                </div>
+
+                <div class="form-group">
+                    <label>Blood Pressure</label>
+                    <input type="number" id="bp" placeholder="Enter BP">
+                </div>
+
+                <div class="form-group">
+                    <label>Glucose</label>
+                    <input type="number" id="glucose" placeholder="Enter glucose">
+                </div>
+
+                <div class="form-group full-width">
+                    <label>Cholesterol</label>
+                    <input type="number" id="cholesterol" placeholder="Enter cholesterol">
+                </div>
+
+            </div>
+
+            <!-- BUTTON -->
+            <button class="btn" onclick="predictAll()">Check Health</button>
+
+            <!-- RESULT -->
+            <div id="result"></div>
+
+            <!-- SUGGESTION -->
+            <div id="suggestions"></div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- CHATBOT BUTTON -->
+<div class="chatbot-btn" onclick="toggleChatbot()">💬</div>
+
+<!-- CHATBOT BOX -->
+<div class="chatbot-box" id="chatbotBox">
+
+    <div class="chatbot-header">
+        Aaru
+        <span onclick="toggleChatbot()">✖</span>
+    </div>
+
+    <div class="chatbot-body" id="chatBody">
+        <div class="bot-msg">Hi! Ask me about your health </div>
+    </div>
+
+    <div class="chatbot-input">
+        <input type="text" id="chatInput" placeholder="Ask something...">
+        <button onclick="sendMessage()">Send</button>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
