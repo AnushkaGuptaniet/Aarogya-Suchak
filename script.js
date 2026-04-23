@@ -226,15 +226,18 @@ function checkBackend() {
   fetch("https://aarogya-suchak.onrender.com/api/data")
     .then(res => res.json())
     .then(data => {
-      console.log(data);
-      alert(data.message);
+      document.getElementById("popup-message").innerText = data.message;
+      document.getElementById("popup").style.display = "flex";
     })
     .catch(err => {
-      console.error(err);
-      alert("Error connecting backend");
+      document.getElementById("popup-message").innerText = "Error connecting backend";
+      document.getElementById("popup").style.display = "flex";
     });
 }
 
+function closePopup() {
+  document.getElementById("popup").style.display = "none";
+}
 // 🧠 SMART LOGIC (FEELS LIKE AI)
 function getSmartReply(msg){
 
