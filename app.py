@@ -179,6 +179,13 @@ def chat():
         reply = f"Based on your result ({disease} - {risk}), take proper care."
 
     return jsonify({"reply": reply})# ==========================
+
+@app.route("/api/data")
+def get_data():
+    return jsonify({
+        "status": "success",
+        "message": "Backend connected successfully 🎉"
+    })
 # 🚀 RUN SERVER
 # ==========================
 
