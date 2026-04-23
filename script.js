@@ -222,6 +222,15 @@ function sendMessage(){
     }, 700);
 }
 
+function checkBackend() {
+  fetch("https://aarogya-suchak.onrender.com/api/data")
+    .then(res => res.json())
+    .then(data => {
+      console.log(data)
+      alert(data.message)
+    })
+}
+
 
 // 🧠 SMART LOGIC (FEELS LIKE AI)
 function getSmartReply(msg){
