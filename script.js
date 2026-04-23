@@ -226,11 +226,14 @@ function checkBackend() {
   fetch("https://aarogya-suchak.onrender.com/api/data")
     .then(res => res.json())
     .then(data => {
-      console.log(data)
-      alert(data.message)
+      console.log(data);
+      alert(data.message);
     })
+    .catch(err => {
+      console.error(err);
+      alert("Error connecting backend");
+    });
 }
-
 
 // 🧠 SMART LOGIC (FEELS LIKE AI)
 function getSmartReply(msg){
