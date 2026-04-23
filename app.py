@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import os
 import pickle
 import numpy as np
 import sqlite3
@@ -67,7 +68,7 @@ def get_kidney_result(data):
 
 @app.route("/")
 def home():
-    return render_template('index.html')
+    return "Aarogya Suchak Running "
 
 
 
@@ -181,7 +182,6 @@ def chat():
 # 🚀 RUN SERVER
 # ==========================
 
-import os
 
-if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 10000)))
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
