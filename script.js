@@ -38,9 +38,13 @@ function loginUser(){
 }
 
 // ---------------- SIGNUP ----------------
-function signupUser() {
+function signupUser(event) {
+  event.preventDefault(); // 🔥 VERY IMPORTANT
+
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
+
+  console.log("Signup clicked", email, password); // debug
 
   fetch("https://aarogya-suchak.onrender.com/signup", {
     method: "POST",
@@ -54,18 +58,19 @@ function signupUser() {
   })
   .then(res => res.json())
   .then(data => {
+    console.log(data);
+
     if (data.status === "success") {
       alert("Signup successful 🎉");
     } else {
-      alert(data.message);
+      alert(data.message || "Signup failed");
     }
   })
   .catch(err => {
     console.error(err);
     alert("Server error");
   });
-}
-// ---------------- LOGOUT ----------------
+}// ---------------- LOGOUT ----------------
 function logoutUser(){
     localStorage.clear();
     window.location.href = "login.html";
