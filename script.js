@@ -18,10 +18,8 @@ if(document.getElementById("height")){
 function loginUser(event) {
   event.preventDefault();
 
-  const email = document.getElementById("email").value;
-  const password = document.getElementById("password").value;
-
-  console.log("Login clicked", email, password);
+  const email = document.getElementById("loginEmail").value;
+  const password = document.getElementById("loginPassword").value;
 
   fetch("https://aarogya-suchak.onrender.com/login", {
     method: "POST",
@@ -35,11 +33,8 @@ function loginUser(event) {
   })
   .then(res => res.json())
   .then(data => {
-    console.log(data);
-
     if (data.status === "success") {
       alert("Login successful 🎉");
-      // 👉 optional redirect
       window.location.href = "index.html";
     } else {
       alert(data.message);
@@ -49,7 +44,8 @@ function loginUser(event) {
     console.error(err);
     alert("Server error");
   });
-}// ---------------- SIGNUP ----------------
+}
+// ---------------- SIGNUP ----------------
 function signupUser(event) {
   event.preventDefault(); // 🔥 VERY IMPORTANT
 
