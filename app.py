@@ -130,28 +130,42 @@ except Exception as e:
 
 @app.route("/signup", methods=["POST"])
 def signup():
-data = request.get_json()
-email = data.get("email")
-password = data.get("password")
+    try:
+        data = request.get_json()
 
-```
-conn = sqlite3.connect("users.db")
-cursor = conn.cursor()
+        if not data:
+            return jsonify({"status": "error", "message": "No data received"})
 
-cursor.execute("""
-CREATE TABLE IF NOT EXISTS users (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    email TEXT,
-    password TEXT
-)
-""")
+        email = data.get("email")
+        password = data.get("password")
 
-cursor.execute("INSERT INTO users (email, password) VALUES (?, ?)", (email, password))
-conn.commit()
-conn.close()
+        if not email or not password:
+            return jsonify({"status": "error", "message": "Missing fields"})
 
-return jsonify({"status": "success"})
-```
+        conn = sqlite3.connect("users.db")
+        cursor = conn.cursor()
+
+        cursor.execute("""
+        CREATE TABLE IF NOT EXISTS users (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            email TEXT,
+            password TEXT
+        )
+        """)
+
+        cursor.execute(
+            "INSERT INTO users (email, password) VALUES (?, ?)",
+            (email, password)
+        )
+
+        conn.commit()
+        conn.close()
+
+        return jsonify({"status": "success"})
+
+    except Exception as e:
+        print("ERROR:", str(e))
+        return jsonify({"status": "error", "message": str(e)})```
 
 @app.route("/login", methods=["POST"])
 def login():
