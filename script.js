@@ -38,32 +38,33 @@ function loginUser(){
 }
 
 // ---------------- SIGNUP ----------------
-function signupUser(){
-    let email = document.getElementById("signupEmail").value;
-    let password = document.getElementById("signupPassword").value;
+function signupUser() {
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-    if(!email || !password){
-        alert("Please fill all fields");
-        return;
+  fetch("https://aarogya-suchak.onrender.com/signup", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      email: email,
+      password: password
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.status === "success") {
+      alert("Signup successful 🎉");
+    } else {
+      alert(data.message);
     }
-
-    fetch("http://127.0.0.1:5000/signup", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({email, password})
-    })
-    .then(res => res.json())
-    .then(data => {
-        if(data.status === "success"){
-            alert("Signup successful!");
-            window.location.href = "login.html";
-        } else {
-            alert(data.message || "Signup failed");
-        }
-    })
-    .catch(() => alert("Server error"));
+  })
+  .catch(err => {
+    console.error(err);
+    alert("Server error");
+  });
 }
-
 // ---------------- LOGOUT ----------------
 function logoutUser(){
     localStorage.clear();
