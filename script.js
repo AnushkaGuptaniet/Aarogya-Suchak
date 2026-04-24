@@ -15,29 +15,41 @@ if(document.getElementById("height")){
 }
 
 // ---------------- LOGIN ----------------
-function loginUser(){
-    let email = document.getElementById("loginEmail").value;
-    let password = document.getElementById("loginPassword").value;
+function loginUser(event) {
+  event.preventDefault();
 
-    fetch("http://127.0.0.1:5000/login", {
-        method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({email, password})
-    })
-    .then(res => res.json())
-    .then(data => {
-        if(data.status === "success"){
-            localStorage.setItem("userEmail", email);
-            alert("Login successful");
-            window.location.href = "assessment.html";
-        } else {
-            alert(data.message);
-        }
-    })
-    .catch(() => alert("Server error"));
-}
+  const email = document.getElementById("email").value;
+  const password = document.getElementById("password").value;
 
-// ---------------- SIGNUP ----------------
+  console.log("Login clicked", email, password);
+
+  fetch("https://aarogya-suchak.onrender.com/login", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      email: email,
+      password: password
+    })
+  })
+  .then(res => res.json())
+  .then(data => {
+    console.log(data);
+
+    if (data.status === "success") {
+      alert("Login successful 🎉");
+      // 👉 optional redirect
+      window.location.href = "index.html";
+    } else {
+      alert(data.message);
+    }
+  })
+  .catch(err => {
+    console.error(err);
+    alert("Server error");
+  });
+}// ---------------- SIGNUP ----------------
 function signupUser(event) {
   event.preventDefault(); // 🔥 VERY IMPORTANT
 
