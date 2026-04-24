@@ -787,16 +787,10 @@ body{
   overflow: hidden; /* 🔥 important */
 }
 /* LEFT */
-.signup-left{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
-  color:white;
-  background: linear-gradient(135deg,#8E24AA,#ff6a88);
+.signup-left {
+  width: 50%;
+  flex: 0 0 50%; /* 🔥 prevent overflow */
 }
-
 .signup-left h1{
   font-size:38px;
 }
@@ -806,14 +800,11 @@ body{
 }
 
 /* RIGHT */
-.signup-right{
-  flex:1;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-}
-
-/* CARD */
+.signup-left,
+.signup-right {
+  width: 50%;
+  flex: 0 0 50%; /* 🔥 prevent overflow */
+}/* CARD */
 .signup-card{
   width:350px;
   padding:40px;
