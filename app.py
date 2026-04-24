@@ -169,22 +169,37 @@ def signup():
 
 @app.route("/login", methods=["POST"])
 def login():
-data = request.get_json()
-email = data.get("email")
-password = data.get("password")
+    try:
+        data = request.get_json()
 
-```
-conn = sqlite3.connect("users.db")
-cursor = conn.cursor()
+        if not data:
+            return jsonify({"status": "error", "message": "No data received"})
 
-cursor.execute("SELECT * FROM users WHERE email=? AND password=?", (email, password))
-user = cursor.fetchone()
-conn.close()
+        email = data.get("email")
+        password = data.get("password")
 
-if user:
-    return jsonify({"status": "success"})
-else:
-    return jsonify({"status": "error"})
+        if not email or not password:
+            return jsonify({"status": "error", "message": "Missing fields"})
+
+        conn = sqlite3.connect("users.db")
+        cursor = conn.cursor()
+
+        cursor.execute(
+            "SELECT * FROM users WHERE email=? AND password=?",
+            (email, password)
+        )
+
+        user = cursor.fetchone()
+        conn.close()
+
+        if user:
+            return jsonify({"status": "success"})
+        else:
+            return jsonify({"status": "error", "message": "Invalid credentials"})
+
+    except Exception as e:
+        print("LOGIN ERROR:", str(e))
+        return jsonify({"status": "error", "message": str(e)})
 ```
 
 # ==========================
