@@ -20,31 +20,69 @@
   <!-- RIGHT SIDE -->
   <div class="signup-right">
 
-    <div class="signup-card">
+    <!DOCTYPE html>
 
-      <h2>Create Account</h2>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Signup - Aarogya Suchak</title>
+<link rel="stylesheet" href="style.css">
+</head>
 
-      <form onsubmit="signupUser(); return false;">
+<body>
 
-        <div class="form-group">
-          <label>Email</label>
-          <input type="email" id="email" placeholder="Enter your email" required>
-        </div>
+<div class="signup-container">
 
-        <div class="form-group">
-          <label>Password</label>
-          <input type="password" id="password" placeholder="Create password" required>
-        </div>
+  <!-- LEFT SIDE -->
 
-        <button class="signup-btn" onclick="signupUser()" type="submit">Sign Up</button>
+  <div class="signup-left">
+    <h1>Join Aarogya Suchak</h1>
+    <p>Your AI Powered Health Assistant</p>
+  </div>
 
-      </form>
+  <!-- RIGHT SIDE -->
 
-      <p class="login-text">
-        Already have an account? <a href="login.html">Login</a>
-      </p>
+  <div class="signup-right">
 
+```
+<div class="signup-card">
+
+  <h2>Create Account</h2>
+
+  <!-- ✅ ONLY FORM HANDLES SUBMIT -->
+  <form onsubmit="signupUser(event)">
+
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" id="email" placeholder="Enter your email" required>
     </div>
+
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" id="password" placeholder="Create password" required>
+    </div>
+
+    <!-- ❌ removed onclick -->
+    <button class="signup-btn" type="submit">Sign Up</button>
+
+  </form>
+
+  <p class="login-text">
+    Already have an account? <a href="login.html">Login</a>
+  </p>
+
+</div>
+```
+
+  </div>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
 
   </div>
 
